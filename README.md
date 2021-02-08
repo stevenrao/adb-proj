@@ -23,7 +23,7 @@ the build platform; include :
 
 2) openssl library,  build from boringssl. 
 
-3) libusb,  provide from install from apt package
+3) libusb,  install from apt package
 
 ### how to build
 #### 1、construct docker images
