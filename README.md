@@ -32,4 +32,5 @@ cd adb-proj && docker build -t adb-build-env .
 #### 2、build code
 cd adb-proj
 docker run -it --rm --name adb-build -v xxxx/xxx/adb-proj:/work/adb-proj  adb-build-env:latest  /bin/bash
+cd adb-proj 
 make
