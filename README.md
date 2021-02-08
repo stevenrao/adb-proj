@@ -9,6 +9,7 @@ I didn't provide a cross compile environment. However, the release binary is pro
 
 #### 1、 adb folder 
 it  is adb source code base on platform/system/core/adb  branch android10-release。 you can get as follow
+
 git clone https://android.googlesource.com/platform/system/core -b android10-release --depth=1
 
 #### 2、depend folder
