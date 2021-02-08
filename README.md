@@ -2,7 +2,7 @@
 the project is build adb from souce code. the adb verson is 1.0.41.  code base on android10-release code. 
 i can build the source on linux x86_64 system, and arm64 system success！
 
-there I didn't provide a arm cross compile environment. but only provide the release binary is provided.(because i build it on a pure linux arm os system, so i don't need cross compile environment :). If you can, please help build a cross compiling environment to improve the project )
+there I didn't provide a arm cross compile environment. but only the release binary is provided.(because i build it on a pure linux arm os system, so i don't need cross compile environment :). If you can, please help build a cross compiling environment to improve the project )
 
 ### Directory structure description
 
