@@ -22,7 +22,7 @@ to  build the source  to adb executable  binary file
 the build platform; include :
 1) clang-10/clang++-10  the source require c++20. 
 
-2）openssl library,  build from boringssl. 
+2) openssl library,  build from boringssl. 
 
 3) libusb,  provide from install from apt package
 
