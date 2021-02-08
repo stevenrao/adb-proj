@@ -9,9 +9,9 @@ I didn't provide a cross compile environment. However, the release binary is pro
 
 #### 1、 adb folder 
 it  is adb source code base on platform/system/core/adb  branch android10-release。 you can get as follow
-
+```
 git clone https://android.googlesource.com/platform/system/core -b android10-release --depth=1
-
+```
 #### 2、depend folder
 it is denpend source code when build adb， the codes are collected from core folder.
 
@@ -28,8 +28,10 @@ the build platform; include :
 
 ### how to build
 #### 1、construct docker images
+```
 cd adb-proj && docker build -t adb-build-env .
 （also the docker image you can get from docker-hub ）
+```
 
 #### 2、build code
 ```
