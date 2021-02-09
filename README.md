@@ -1,4 +1,5 @@
 # adb-proj
+# adb 1.0.41 (x86_64 and arm64)
 the project is build adb from souce code. the adb verson is 1.0.41.  code base on android10-release code. 
 i can build the source on linux x86_64 system, and arm64 system success！
 
