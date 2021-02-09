@@ -1029,7 +1029,7 @@ HostRequestResult handle_host_request(std::string_view service, TransportType ty
                                       const char* serial, TransportId transport_id, int reply_fd,
                                       asocket* s) {
     
-    LOG(INFO)  <<  "handle_host_request " << service;
+    LOG(DEBUG)  <<  "handle_host_request " << service;
 
     if (service == "kill") {
         fprintf(stderr, "adb server killed by remote request\n");

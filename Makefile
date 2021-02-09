@@ -8,27 +8,35 @@ HOSTARCH := $(shell uname -m | \
 	-e s/macppc/powerpc/)
 
 CXX = clang++ -std=c++20
-CC  = clang 
+CC  = clang
 
-$(shell mkdir -p out/$(HOSTARCH))
-$(shell ln -s /work/openssl openssl)
+shell:
+ifneq (openssl, $(wildcard openssl))
+	$(shell ln -s /work/openssl openssl)
+endif
+ifneq (out/$(HOSTARCH), $(wildcard out/$(HOSTARCH)))
+	$(shell mkdir -p out/$(HOSTARCH))
+endif	
 
-libdepend_a_TARGET=out/$(HOSTARCH)/libdepend.a
-libadb_a_TARGET=out/$(HOSTARCH)/libadb.a
-libmdnssd_a_TARGET=out/$(HOSTARCH)/libmsdbssd.a
-adb_TARGET=out/$(HOSTARCH)/adb
+
+libdepend_a_TARGET := out/$(HOSTARCH)/libdepend.a
+libadb_a_TARGET := out/$(HOSTARCH)/libadb.a
+libmdnssd_a_TARGET := out/$(HOSTARCH)/libmsdbssd.a
+adb_TARGET := out/$(HOSTARCH)/adb
 
 .PHONY: all
 
 all:$(libdepend_a_TARGET) $(libmdnssd_a_TARGET) $(libadb_a_TARGET) $(adb_TARGET)
 
-libopenssl_INC = openssl/$(HOSTARCH)/include
-libopenssl_LIB = openssl/$(HOSTARCH)/lib
+libopenssl_INC := openssl/$(HOSTARCH)/include
+libopenssl_LIB := openssl/$(HOSTARCH)/lib
+libusb_INC := libusb-1.0/$(HOSTARCH)
+libusb_LIB := libusb-1.0/$(HOSTARCH)/libusb-1.0
 
 #编译lia
-libdepend_a_INC = -I$(libopenssl_INC) -Idepend -Idepend/diagnose_usb
+libdepend_a_INC := -I$(libopenssl_INC) -Idepend -Idepend/diagnose_usb
 
-libdepend_a_SOURCES_CXX = \
+libdepend_a_SOURCES_CXX := \
         depend/android-base/chrono_utils.cpp \
         depend/android-base/cmsg.cpp \
         depend/android-base/file.cpp \
@@ -79,15 +87,15 @@ libdepend_a_SOURCES_CXX = \
 	depend/diagnose_usb/diagnose_usb.cpp
 
 
-libdepend_a_SOURCES_C = \
+libdepend_a_SOURCES_C := \
 	depend/cutils/strlcpy.c \
 	depend/android-base/android_pubkey.c
 
-libdepend_a_CXXFLAGS = -DFAKE_LOG_DEVICE=1  -DADB_HOST=1
+libdepend_a_CXXFLAGS := -DFAKE_LOG_DEVICE=1  -DADB_HOST=1
 
 
-libdepend_a_OBJ_CXX = $(patsubst %.cpp,%.o, $(libdepend_a_SOURCES_CXX))
-libdepend_a_OBJ_C = $(patsubst %.c,%.o, $(libdepend_a_SOURCES_C))
+libdepend_a_OBJ_CXX := $(patsubst %.cpp,%.o, $(libdepend_a_SOURCES_CXX))
+libdepend_a_OBJ_C := $(patsubst %.c,%.o, $(libdepend_a_SOURCES_C))
 
 
 $(libdepend_a_OBJ_CXX):%.o:%.cpp
@@ -101,15 +109,15 @@ $(libdepend_a_TARGET):$(libdepend_a_OBJ_CXX) $(libdepend_a_OBJ_C)
 
 
 #编译libmdnssd.a
-libmdnssd_a_INC = -Idepend/mdnssd
+libmdnssd_a_INC := -Idepend/mdnssd
 
 
-libmdnssd_a_SOURCES_C = \
+libmdnssd_a_SOURCES_C := \
 	depend/mdnssd/dnssd_clientlib.c \
 	depend/mdnssd/dnssd_clientstub.c \
 	depend/mdnssd/dnssd_ipc.c
 
-libmdnssd_a_CFLAGS = \
+libmdnssd_a_CFLAGS := \
 	-O2 \
 	-g \
 	-fno-strict-aliasing \
@@ -136,7 +144,7 @@ libmdnssd_a_CFLAGS = \
 	-DUSES_NETLINK \
 	-DADB_HOST=1
 
-libmdnssd_a_OBJ_C = $(patsubst %.c,%.o, $(libmdnssd_a_SOURCES_C))
+libmdnssd_a_OBJ_C := $(patsubst %.c,%.o, $(libmdnssd_a_SOURCES_C))
 $(libmdnssd_a_OBJ_C):%.o:%.c
 	$(CC) -c  $(libmdnssd_a_INC) $(libmdnssd_a_CFLAGS) $< -o $@
 
@@ -144,9 +152,9 @@ $(libmdnssd_a_TARGET):$(libmdnssd_a_OBJ_C)
 	ar rc $(libmdnssd_a_TARGET) $(libmdnssd_a_OBJ_C)
 
 #编译libadb.a
-libadb_a_INC =  -I$(libopenssl_INC) -Idepend -Iadb
+libadb_a_INC :=  -I$(libusb_INC) -I$(libopenssl_INC) -Idepend -Iadb
 
-libadb_a_SOURCES = \
+libadb_a_SOURCES := \
 	adb/adb.cpp \
 	adb/adb_io.cpp \
 	adb/adb_listeners.cpp \
@@ -170,9 +178,9 @@ libadb_a_SOURCES = \
 	adb/client/transport_mdns.cpp \
 	adb/client/usb_linux.cpp
 
-libadb_a_CXXFLAGS = -DADB_HOST=1 $(ADB_COMMON_CFLAGS) \
+libadb_a_CXXFLAGS := -DADB_HOST=1 $(ADB_COMMON_CFLAGS) \
 
-libadb_a_OBJ_CXX = $(patsubst %.cpp,%.o, $(libadb_a_SOURCES))
+libadb_a_OBJ_CXX := $(patsubst %.cpp,%.o, $(libadb_a_SOURCES))
 
 $(libadb_a_OBJ_CXX):%.o:%.cpp
 	$(CXX) -c  $(libadb_a_INC) $(libadb_a_CXXFLAGS) $< -o $@
@@ -181,9 +189,9 @@ $(libadb_a_TARGET):$(libadb_a_OBJ_CXX)
 	ar rc $(libadb_a_TARGET) $(libadb_a_OBJ_CXX)
 
 #编译adb
-adb_INC = -I$(libopenssl_INC) -Idepend -Iadb
+adb_INC := -I$(libopenssl_INC) -I$(libusb_INC) -Idepend -Iadb
 
-adb_SOURCES = \
+adb_SOURCES := \
 	adb/client/adb_client.cpp \
 	adb/client/bugreport.cpp \
 	adb/client/commandline.cpp \
@@ -194,11 +202,11 @@ adb_SOURCES = \
 	adb/client/line_printer.cpp \
 	adb/shell_service_protocol.cpp
 
-adb_CXXFLAGS =	-std=gnu++2a -D_GNU_SOURCE -DADB_HOST=1 $(ADB_COMMON_CFLAGS) -D_Nonnull= -D_Nullable= -fpermissive
+adb_CXXFLAGS :=	-std=gnu++2a -D_GNU_SOURCE -DADB_HOST=1 $(ADB_COMMON_CFLAGS) -D_Nonnull= -D_Nullable= -fpermissive
 
-adb_LDFLAG =  $(libadb_a_TARGET) $(libmdnssd_a_TARGET) $(libdepend_a_TARGET) -l:libusb-1.0.a  -L$(libopenssl_LIB) -l:libcrypto.a  -ludev -lpthread -static-libgcc -static-libstdc++
+adb_LDFLAG :=  $(libadb_a_TARGET) $(libmdnssd_a_TARGET) $(libdepend_a_TARGET) -L$(libusb_LIB) -l:libusb-1.0.a -ludev -L$(libopenssl_LIB) -l:libcrypto.a  -ludev -lpthread -static-libgcc -static-libstdc++
 
-adb_OBJ_CXX = $(patsubst %.cpp,%.o, $(adb_SOURCES))
+adb_OBJ_CXX := $(patsubst %.cpp,%.o, $(adb_SOURCES))
 
 $(adb_OBJ_CXX):%.o:%.cpp
 	$(CXX) -c  $(adb_INC) $(adb_CXXFLAGS) $< -o $@
