@@ -5,12 +5,12 @@ i can build the source on linux x86_64 system, and arm64 system success！
 there I didn't provide a arm cross compile environment. but only the release binary is provided.(because i build it on a pure linux arm os system（such as MacBook Air M1）, so i don't need cross compile environment :). If you can, please help build a cross compiling environment to improve the project )
 
 ### Directory structure description
-
+```
 ├── adb
 ├── depend
 ├── Dockerfile
 ├── Makefile
-
+```
 #### 1、 adb folder 
 it  is adb source code base on platform/system/core/adb  branch android10-release。 you can get as follow
 ```
