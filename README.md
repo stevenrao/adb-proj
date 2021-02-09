@@ -6,6 +6,11 @@ there I didn't provide a arm cross compile environment. but only the release bin
 
 ### Directory structure description
 
+├── adb
+├── depend
+├── Dockerfile
+├── Makefile
+
 #### 1、 adb folder 
 it  is adb source code base on platform/system/core/adb  branch android10-release。 you can get as follow
 ```
