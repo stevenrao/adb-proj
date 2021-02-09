@@ -17,7 +17,7 @@ it  is adb source code base on platform/system/core/adb  branch android10-releas
 git clone https://android.googlesource.com/platform/system/core -b android10-release --depth=1
 ```
 #### 2、depend folder
-it is denpend source code when build adb， the codes are collected from core folder.
+it is the needed denpend source or header code when build adb， the codes are collected from core folder.
 
 #### 3、Makefile
 to  build the source  to adb executable  binary file  
