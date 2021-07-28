@@ -35,11 +35,10 @@ the build platform; include :
 #### 1、construct docker images
 ```
 cd adb-proj && docker build -t adb-build-env .
-（also the docker image you can get from docker-hub 
-docker pull raochaoxun/adb-build-env-aarch64:1.0.0
-or
-docker pull raochaoxun/adb-build-env-x86-64:1.0.0
-）
+
+or the docker image you can get from docker-hub 
+docker pull raochaoxun/adb-build-env-aarch64:1.0.0 (docker pull raochaoxun/adb-build-env-x86-64:1.0.0)
+
 ```
 
 #### 2、build code
